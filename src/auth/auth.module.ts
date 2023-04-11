@@ -22,10 +22,11 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       imports: [ ConfigModule ],
       inject: [ ConfigService ],
 
+      //Es la funcion que voy a llamar cuando se intente registrar el modulo
       useFactory: ( configService: ConfigService ) => {
         return {
-          secret: configService.get('JWT_SECRET'),
-          signOptions: {
+          secret: configService.get('JWT_SECRET'), //Es la llave para firmar y revisar nuestros tokens
+          signOptions: { //El tiempo de duracion del token
             expiresIn: '2h'
           }
         }
@@ -33,7 +34,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     }),
 
     // JwtModule.register({
-    //   secret: process.env.JWT_SECRET,
+    //   secret: process.env.JWT_SECRET, 
     //   signOptions: {
     //     expiresIn: '2h'
     //   }

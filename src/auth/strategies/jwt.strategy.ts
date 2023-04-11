@@ -1,11 +1,12 @@
 import { PassportStrategy } from '@nestjs/passport';
+import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UnauthorizedException, Injectable } from '@nestjs/common';
 import { ExtractJwt, Strategy } from "passport-jwt";
+
+import { Repository } from 'typeorm';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { User } from '../entities/user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { ConfigService } from '@nestjs/config';
-import { UnauthorizedException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy( Strategy){
@@ -19,7 +20,7 @@ export class JwtStrategy extends PassportStrategy( Strategy){
     ){
         super({
             secretOrKey: configService.get('JWT_SECRET'),
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), //Indico de donde extraigo el Token
         });
     }
         
@@ -37,6 +38,6 @@ export class JwtStrategy extends PassportStrategy( Strategy){
             
         // console.log( { user } )
             
-        return user;
+        return user; //Se añade al Request
     }
 }

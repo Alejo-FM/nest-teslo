@@ -8,7 +8,7 @@ import { User } from '../entities/user.entity';
 export class UserRoleGuard implements CanActivate {
 
   constructor(
-    private readonly reflector: Reflector,
+    private readonly reflector: Reflector, //Ayuda a ver la meta data
   ){}
 
   canActivate(
@@ -33,6 +33,6 @@ export class UserRoleGuard implements CanActivate {
 
     throw new ForbiddenException(
       `User ${ user.fullName } need a valid role: [${ validRoles }]`
-    )
+    );
   }
 }
